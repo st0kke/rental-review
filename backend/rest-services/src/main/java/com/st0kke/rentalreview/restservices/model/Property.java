@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.st0kke.rentalreview.jee.services.model;
+package com.st0kke.rentalreview.restservices.model;
 
 import java.sql.Date;
 import javax.persistence.Column;
@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author simonogmette
+ * @author 
  */
 @Entity
 public class Property {
