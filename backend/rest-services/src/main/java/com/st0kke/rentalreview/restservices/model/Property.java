@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Property {
     
-    @SequenceGenerator(name="property_gen", sequenceName="property_seq")
+    @SequenceGenerator(name="property_gen", sequenceName="property_seq", allocationSize=1)
     @Id @GeneratedValue(generator="property_gen")
     private long id;
     
@@ -32,6 +32,17 @@ public class Property {
     private String address_line3;
     private String address_line4;
     private String postcode;
+    
+    @Column(name="property_type")
+    private String propertyType;
+
+    public String getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
+    }
     
     /*
     @Column(name="date_created", nullable=false)

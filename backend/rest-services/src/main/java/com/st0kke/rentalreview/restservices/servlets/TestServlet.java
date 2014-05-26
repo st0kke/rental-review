@@ -6,8 +6,11 @@
 
 package com.st0kke.rentalreview.restservices.servlets;
 
+import com.st0kke.rentalreview.restservices.service.PropertyService;
+import com.st0kke.rentalreview.restservices.service.PropertyServiceImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +23,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name= "TestServlet", urlPatterns = {"/TestServlet"})
 public class TestServlet extends HttpServlet {
+    
+    @EJB
+    private PropertyService propertyService;
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,6 +41,9 @@ public class TestServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        propertyService.addProperty();
+        
         try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
