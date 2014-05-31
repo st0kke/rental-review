@@ -6,10 +6,17 @@
 
 package com.st0kke.rentalreview.restservices.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -17,8 +24,22 @@ import javax.persistence.SequenceGenerator;
  * @author 
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name=Property.FIND_ALL_PROPERTIES, query="SELECT p FROM Property p") }
+)
 public class Property {
     
+	@Override
+	public String toString() {
+		return "Property [id=" + id + ", address_line1=" + address_line1
+				+ ", address_line2=" + address_line2 + ", address_line3="
+				+ address_line3 + ", address_line4=" + address_line4
+				+ ", postcode=" + postcode + ", propertyType=" + propertyType
+				+ ", active=" + active + "]";
+	}
+
+	public static final String FIND_ALL_PROPERTIES = "findAllProperties";
+	
     @SequenceGenerator(name="property_gen", sequenceName="property_seq", allocationSize=1)
     @Id @GeneratedValue(generator="property_gen")
     private long id;
@@ -29,7 +50,83 @@ public class Property {
     private String address_line4;
     private String postcode;
     
-    @Column(name="property_type")
+    @OneToMany(mappedBy="property", cascade=CascadeType.PERSIST)
+    private List<Review> reviews;
+    
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (active ? 1231 : 1237);
+		result = prime * result
+				+ ((address_line1 == null) ? 0 : address_line1.hashCode());
+		result = prime * result
+				+ ((address_line2 == null) ? 0 : address_line2.hashCode());
+		result = prime * result
+				+ ((address_line3 == null) ? 0 : address_line3.hashCode());
+		result = prime * result
+				+ ((address_line4 == null) ? 0 : address_line4.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result
+				+ ((postcode == null) ? 0 : postcode.hashCode());
+		result = prime * result
+				+ ((propertyType == null) ? 0 : propertyType.hashCode());
+		result = prime * result + ((reviews == null) ? 0 : reviews.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Property other = (Property) obj;
+		if (active != other.active)
+			return false;
+		if (address_line1 == null) {
+			if (other.address_line1 != null)
+				return false;
+		} else if (!address_line1.equals(other.address_line1))
+			return false;
+		if (address_line2 == null) {
+			if (other.address_line2 != null)
+				return false;
+		} else if (!address_line2.equals(other.address_line2))
+			return false;
+		if (address_line3 == null) {
+			if (other.address_line3 != null)
+				return false;
+		} else if (!address_line3.equals(other.address_line3))
+			return false;
+		if (address_line4 == null) {
+			if (other.address_line4 != null)
+				return false;
+		} else if (!address_line4.equals(other.address_line4))
+			return false;
+		if (id != other.id)
+			return false;
+		if (postcode == null) {
+			if (other.postcode != null)
+				return false;
+		} else if (!postcode.equals(other.postcode))
+			return false;
+		if (propertyType == null) {
+			if (other.propertyType != null)
+				return false;
+		} else if (!propertyType.equals(other.propertyType))
+			return false;
+		if (reviews == null) {
+			if (other.reviews != null)
+				return false;
+		} else if (!reviews.equals(other.reviews))
+			return false;
+		return true;
+	}
+
+	@Column(name="property_type")
     private String propertyType;
 
     public String getPropertyType() {

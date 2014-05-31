@@ -5,3 +5,4 @@
     <class>com.st0kke.rentalreview.restservices.model.Property</class>
   </persistence-unit>
 </persistence>
+

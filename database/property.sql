@@ -1,8 +1,8 @@
-﻿-- Table: property
+-- Table: property
 
 -- DROP TABLE property;
 
-CREATE TABLE property
+CREATE TABLE rentals.property
 (
   id numeric NOT NULL,
   property_type character varying(10) NOT NULL,
@@ -15,8 +15,4 @@ CREATE TABLE property
   active boolean NOT NULL,
   CONSTRAINT property_pkey PRIMARY KEY (id)
 )
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE property
-  OWNER TO rentals;
+
