@@ -35,6 +35,8 @@ public class ReviewTest extends JPAEntityTest {
 		Review reviewFromDB = (Review) q.getSingleResult();
 		assertEquals(review1, reviewFromDB);
 		
+		assertEquals(p, reviewFromDB.getProperty());
+		
 	}
 
 }
