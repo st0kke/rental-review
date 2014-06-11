@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author simonogmette
+ * @author 
  */
 @Local
 public interface PropertyService {
