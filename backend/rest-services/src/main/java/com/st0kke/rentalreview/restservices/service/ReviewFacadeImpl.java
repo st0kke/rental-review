@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless
-public class ReviewServiceImpl implements ReviewService {
+public class ReviewFacadeImpl implements ReviewFacade {
 	
 	@PersistenceContext
 	private EntityManager em;

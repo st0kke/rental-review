@@ -13,7 +13,7 @@ import javax.ejb.Local;
  * @author 
  */
 @Local
-public interface PropertyService {
+public interface PropertyFacade {
     
     int addProperty();
 }

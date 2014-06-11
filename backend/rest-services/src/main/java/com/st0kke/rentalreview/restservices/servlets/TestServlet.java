@@ -7,9 +7,7 @@
 package com.st0kke.rentalreview.restservices.servlets;
 
 import com.st0kke.rentalreview.restservices.model.Review;
-import com.st0kke.rentalreview.restservices.service.PropertyService;
-import com.st0kke.rentalreview.restservices.service.PropertyServiceImpl;
-import com.st0kke.rentalreview.restservices.service.ReviewService;
+import com.st0kke.rentalreview.restservices.service.ReviewFacade;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TestServlet extends HttpServlet {
     
     @EJB
-    private ReviewService reviewService;
+    private ReviewFacade reviewFacade;
     
 
     /**
@@ -48,7 +46,7 @@ public class TestServlet extends HttpServlet {
         
         
         
-        //Review r = reviewService.addNewReview("addr1", "addr2", "addr3", "addr4", "postcode", 1, "comment");
+        Review r = reviewFacade.addNewReview("addr1", "addr2", "addr3", "addr4", "postcode", 1, "comment");
         
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -59,7 +57,7 @@ public class TestServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
-            out.println("added review: " + reviewService);
+            out.println("added review: " + r);
             out.println("</body>");
             out.println("</html>");
         } finally {

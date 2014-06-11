@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author 
  */
 @Stateless
-public class PropertyServiceImpl implements PropertyService{
+public class PropertyFacadeImpl implements PropertyFacade{
     
     @PersistenceContext(unitName="rentals")
     private EntityManager em;
