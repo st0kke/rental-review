@@ -50,7 +50,7 @@ public class Property {
     private String address_line4;
     private String postcode;
     
-    @OneToMany(mappedBy="property", cascade=CascadeType.PERSIST)
+    @OneToMany(mappedBy="property", cascade=CascadeType.ALL)
     private List<Review> reviews;
     
     @Override

@@ -10,22 +10,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
+@XmlRootElement
 @NamedQueries({
-	@NamedQuery(name=Review.FIND_ALL_REVIEWS, query="SELECT r FROM Review r")
+	@NamedQuery(name=Review.FIND_ALL_REVIEWS, query="SELECT r FROM Review r"),
+        @NamedQuery(name=Review.FIND_BY_REVIEW_ID, query="SELECT r FROM Review r WHERE r.id = :id")
 	})
 public class Review {
 	
 	public static final String FIND_ALL_REVIEWS = "findAllReviews";
+        public static final String FIND_BY_REVIEW_ID = "findByReviewId";
 	
 	@SequenceGenerator(name="review_gen", sequenceName="review_seq", allocationSize=1)
 	@Id
 	@GeneratedValue(generator="review_gen")
 	private long id;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="property_id")
 	private Property property;
 	

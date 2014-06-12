@@ -2,12 +2,16 @@ package com.st0kke.rentalreview.restservices.service;
 
 import com.st0kke.rentalreview.restservices.model.Property;
 import com.st0kke.rentalreview.restservices.model.Review;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.ws.rs.Path;
 
 @Stateless
+@Path("/reviews")
 public class ReviewFacadeImpl implements ReviewFacade {
 	
 	@PersistenceContext
@@ -53,5 +57,21 @@ public class ReviewFacadeImpl implements ReviewFacade {
 		return review;
 		
 	}
+
+    @Override
+    public Review getReview(long reviewId) {
+        TypedQuery<Review> query = em.createNamedQuery(Review.FIND_BY_REVIEW_ID, Review.class).setParameter("id", reviewId);
+        Review review = query.getSingleResult();
+        return review;
+    }
+
+    @Override
+    public List<Review> getAllReviews() {
+        TypedQuery<Review> query = em.createNamedQuery(Review.FIND_ALL_REVIEWS, Review.class);
+        List<Review> results = query.getResultList();
+        
+        return results;
+        
+    }
 
 }

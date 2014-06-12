@@ -11,6 +11,8 @@ import com.st0kke.rentalreview.restservices.service.ReviewFacade;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -45,9 +47,8 @@ public class TestServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         
-        
-        Review r = reviewFacade.addNewReview("addr1", "addr2", "addr3", "addr4", "postcode", 1, "comment");
-        
+        List<Review> newReviews = this.addSomeReviews();
+         
         try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -57,12 +58,45 @@ public class TestServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
-            out.println("added review: " + r);
+            
+            
+            for (Review r : newReviews) {
+                out.println("<p>");
+                out.println("added the review: " + r);
+                out.println("</p>");
+            }
+            
+            out.println("<h1>A Specific Review </h1>");
+            out.println(this.reviewFacade.getReview(7));
+            
+            out.println("<h1> All Reviews </h1>");
+            
+            List<Review> allReviews = reviewFacade.getAllReviews();
+            for (Review r : allReviews) {
+                out.println("<p>");
+                out.println("review: " + r);
+                out.println("</p>");
+            }
+            
+            
+            
+            
             out.println("</body>");
             out.println("</html>");
         } finally {
             out.close();
         }
+    }
+    
+    private List<Review> addSomeReviews() {
+        Review r = reviewFacade.addNewReview("addr1", "addr2", "addr3", "addr4", "postcode", 1, "comment");
+        Review r2 = reviewFacade.addReviewToExistingProperty(r.getProperty().getId(), 5, "another comment");
+      
+        List<Review> newReviews = new ArrayList<Review>();
+        newReviews.add(r);
+        newReviews.add(r2);
+                
+        return newReviews;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
