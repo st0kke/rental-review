@@ -9,6 +9,8 @@ import java.util.List;
 public interface ReviewFacade {
 	
 	Review addNewReview(String addr1, String addr2, String addr3, String addr4, String postcode, int rating, String comment);
+        
+        Review addReview(Review review);
 
 	Review addReviewToExistingProperty(long propertyId, int rating, String comment);
         
