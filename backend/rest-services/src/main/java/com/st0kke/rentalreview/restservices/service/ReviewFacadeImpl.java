@@ -3,6 +3,7 @@ package com.st0kke.rentalreview.restservices.service;
 import com.st0kke.rentalreview.restservices.model.Property;
 import com.st0kke.rentalreview.restservices.model.Review;
 import java.util.List;
+import javax.ejb.LocalBean;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@LocalBean
 @Stateless
 @Path("/reviews")
 public class ReviewFacadeImpl implements ReviewFacade {
@@ -108,7 +110,9 @@ public class ReviewFacadeImpl implements ReviewFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Review addReview(Review review) {
-        em.persist(review);
+   //     em.persist(review);
+     
+        System.out.println("Recieved + " + review);
         return review;
     }
 
