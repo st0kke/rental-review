@@ -39,9 +39,10 @@ public class Property {
 	}
 
 	public static final String FIND_ALL_PROPERTIES = "findAllProperties";
-	
+
+    @Id    
     @SequenceGenerator(name="property_gen", sequenceName="property_seq", allocationSize=1)
-    @Id @GeneratedValue(generator="property_gen")
+    @GeneratedValue(generator="property_gen")
     private long id;
     
     private String address_line1;

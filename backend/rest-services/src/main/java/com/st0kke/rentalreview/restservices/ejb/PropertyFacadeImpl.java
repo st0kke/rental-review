@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.st0kke.rentalreview.restservices.service;
+package com.st0kke.rentalreview.restservices.ejb;
 
 import com.st0kke.rentalreview.restservices.model.Property;
 import javax.ejb.Stateless;

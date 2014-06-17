@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebListener;
 
 /**
  *
- * @author metteaarestrupbyrresen
+ * @author 
  */
 @WebListener()
 public class ContextListener implements ServletContextListener {

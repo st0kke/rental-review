@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
-@XmlRootElement
+@XmlRootElement()
 @NamedQueries({
 	@NamedQuery(name=Review.FIND_ALL_REVIEWS, query="SELECT r FROM Review r"),
         @NamedQuery(name=Review.FIND_BY_REVIEW_ID, query="SELECT r FROM Review r WHERE r.id = :id")

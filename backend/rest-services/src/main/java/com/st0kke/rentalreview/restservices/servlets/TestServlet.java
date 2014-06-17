@@ -7,11 +7,12 @@
 package com.st0kke.rentalreview.restservices.servlets;
 
 import com.st0kke.rentalreview.restservices.model.Review;
-import com.st0kke.rentalreview.restservices.service.ReviewFacade;
+import com.st0kke.rentalreview.restservices.ejb.ReviewFacade;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -24,8 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *
  * @author 
+ * 
  */
-@WebServlet(name= "TestServlet", urlPatterns = {"/TestServlet"})
+//TODO: remove this class
+@WebServlet(name= "TestServlet", urlPatterns = {"/TestServlet", "/TestServlet/reviews/new"})
 public class TestServlet extends HttpServlet {
     
     @EJB
@@ -125,7 +128,11 @@ public class TestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        out.println("TestServlet called");
+        out.println("Request Parameters: " + getRequestParameters(request));
+        out.println("Request Headers: " + getRequestHeaders(request));
+                
     }
 
     /**
@@ -137,5 +144,24 @@ public class TestServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private String getRequestParameters(HttpServletRequest request) {
+        StringBuilder builder = new StringBuilder();
+        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
+            String nextElement = (String) e.nextElement();
+            builder.append(nextElement + " -> " + request.getParameter(nextElement));
+        }
+        return builder.toString();
+    }
+
+    private String getRequestHeaders(HttpServletRequest request) {
+       StringBuilder builder = new StringBuilder();
+       for (Enumeration e = request.getHeaderNames(); e.hasMoreElements();) {
+           String nextElement = (String) e.nextElement();
+           builder.append(nextElement + " -> " + request.getHeader(nextElement));
+       }
+       
+       return builder.toString();
+    }
 
 }

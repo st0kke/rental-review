@@ -25,7 +25,7 @@ public class ApplicationConfigREST extends Application {
     }
 
     private void addServiceClasses(Set<Class<?>> s) {
-        s.add(com.st0kke.rentalreview.restservices.service.ReviewFacadeImpl.class);
+        s.add(com.st0kke.rentalreview.restservices.service.ReviewService.class);
     }
 
     /**
@@ -34,6 +34,6 @@ public class ApplicationConfigREST extends Application {
      * given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.st0kke.rentalreview.restservices.service.ReviewFacadeImpl.class);
+        resources.add(com.st0kke.rentalreview.restservices.service.ReviewService.class);
     }
 }

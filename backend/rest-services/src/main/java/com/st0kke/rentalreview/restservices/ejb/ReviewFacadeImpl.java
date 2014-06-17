@@ -1,4 +1,4 @@
-package com.st0kke.rentalreview.restservices.service;
+package com.st0kke.rentalreview.restservices.ejb;
 
 import com.st0kke.rentalreview.restservices.model.Property;
 import com.st0kke.rentalreview.restservices.model.Review;
@@ -9,26 +9,15 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.POST;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-@LocalBean
+//@LocalBean
 @Stateless
-@Path("/reviews")
 public class ReviewFacadeImpl implements ReviewFacade {
 	
 	@PersistenceContext
 	private EntityManager em;
 	
 	@Override
-        @Consumes(MediaType.APPLICATION_JSON)
         public Review addNewReview(String addr1, String addr2, String addr3,
 			String addr4, String postcode, int rating, String comment) {
 		
@@ -82,10 +71,7 @@ public class ReviewFacadeImpl implements ReviewFacade {
 	}
 
     @Override
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("{id}")
-    public Review getReview(@PathParam("id") long reviewId) {
+    public Review getReview(long reviewId) {
         TypedQuery<Review> query = em.createNamedQuery(Review.FIND_BY_REVIEW_ID, Review.class).setParameter("id", reviewId);
         List<Review> reviews = query.getResultList();
         if (reviews.isEmpty()) {
@@ -95,8 +81,6 @@ public class ReviewFacadeImpl implements ReviewFacade {
     }
 
     @Override
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Review> getAllReviews() {
         TypedQuery<Review> query = em.createNamedQuery(Review.FIND_ALL_REVIEWS, Review.class);
         List<Review> results = query.getResultList();
@@ -106,9 +90,6 @@ public class ReviewFacadeImpl implements ReviewFacade {
     }
 
     @Override
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Review addReview(Review review) {
    //     em.persist(review);
      
@@ -116,4 +97,5 @@ public class ReviewFacadeImpl implements ReviewFacade {
         return review;
     }
 
+    
 }
