@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>MyApp</title>
+		<meta charset="UTF-8">  
+	</head>
+	
+	<body>
+
+	<script src="js/extensions/jquery-2.1.1.js"></script>
+	<script src="js/extensions/underscore.js"></script>
+	<script src="js/extensions/backbone.js"></script>
+	
+	<script>
+		Review = Backbone.Model.extend({
+			initialize: function() {
+				console.log('created');
+
+				this.on("change", function(){
+					console.log('these values changed: ' + JSON.stringify(this.changed) + ' previous attributes: ' + JSON.stringify(this.previousAttributes()));
+				});
+
+				this.on("change:comments", function(){
+					console.log('comments changed');
+				});
+
+				this.on("invalid", function(model, error){
+					console.log("**Validation Error: " + error);
+				})
+			},
+
+			defaults: {
+				rating: 0,
+				comments: 'not a great place to stay'
+			},
+
+			logDetailsToConsole: function() {
+				console.log(JSON.stringify(this.attributes));
+			},
+
+			validate: function(attrs) {
+				//console.log('validate called with attrs: ' + attrs);
+				if (attrs.rating > 5) { 
+					return "rating cannot be greater than 5";
+				}
+			}
+
+
+
+		});
+
+		var review1 = new Review();
+		console.log(review1.get('rating'));
+	
+		var review2 = new Review({rating: 5, comments:'awesome place'});
+		console.log(review2.get('rating'));
+		review2.set('comments', 'awesome place. 5 star!!');
+
+		console.log('all attributes; ' + JSON.stringify(review2.attributes));
+		//review2.logDetailsToConsole();
+		review2.set('rating', 6, {validate: true});
+		//review2.logDetailsToConsole();
+
+		review1.set('rating', 7);
+		console.log('is review1 valid: ' + review1.isValid());
+
+		var PropertyReviews = Backbone.Collection.extend({
+			model: Review,
+
+			initialize: function() {
+				console.log('new collection setup');
+
+
+			}
+		})
+		
+
+		var allReviews = new PropertyReviews([review1, review2]);
+
+		var review3 = new Review({rating: 3, comments: 'its ok'});
+		allReviews.add(review3);
+
+		var aReview = allReviews.get('c2');
+		console.log('retrieved : ' + aReview.get('comments'));
+
+
+	</script>	
+	</body>	
+</html>

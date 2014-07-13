@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Rental Reviews</title>
+	</head>
+	<body>
+
+		<script src="js/extensions/jquery-2.1.1.js"></script>
+		<script src="js/extensions/underscore.js"></script>
+		<script src="js/extensions/backbone.js"></script>
+		<script>
+			var Review = Backbone.Model.extend({
+				initialize: function() {
+					console.log("initialized a new review");
+				},	
+
+				urlRoot: "http://localhost:9000/api/review",
+
+				defaults: {
+					rating: 0,
+					comments: ""
+				}
+			});
+
+			var testReview = new Review();
+
+			var ReviewList = Backbone.Collection.extend({
+				model: Review,
+
+				url: "http://localhost:9000/api/reviews",
+
+				initialize: function() {
+					console.log('setup a new collection')
+				}
+			});
+
+			var review1 = new Review({rating:1, comments:'poor, poor, poor, what more can I say?'});
+			var review2 = new Review({rating: 5, comments:'this place is super'});
+			var reviewArray = [review1, review2];
+
+			var allReviews = new ReviewList(reviewArray);
+			
+			
+			function output(theReviews) {
+				var message = 'the number of reviews is: ';
+
+				function outputMessage() {
+					console.log(message + theReviews.length);
+				}
+
+				return outputMessage();
+
+			}
+
+			output(allReviews);
+			//allReviews.reset(review1);
+			
+			allReviews.fetch({
+				success: function(e) {
+					output(allReviews);
+				},
+				error: function(e) {
+					console.log('something went wrong');
+				}
+			});
+			
+			var review3 = new Review({rating:3, comments:'not bad at all'});
+			allReviews.add()
+			review3.save({
+				success: function(e) {
+					console.log('saved ok');
+				},
+				error: function(e)  {
+					console.log('there was an error in the save ');
+				}
+
+			});
+
+			var ReviewView = Backbone.View.extend({
+				model: Review,
+
+				initialize: function() {
+					console.log('initialize view');
+					this.render();
+				},
+
+				render: function() {
+					console.log('rendering review');
+				}
+			});
+
+		</script>
+	</body>
+</html>
